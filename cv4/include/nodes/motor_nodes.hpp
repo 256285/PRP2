@@ -7,9 +7,7 @@
 
 
 namespace nodes {
-    struct WheelSpeeds {
-        uint8_t l;
-        uint8_t r;
+
     };
 
     class MotorNode : public rclcpp::Node {
@@ -29,26 +27,26 @@ namespace nodes {
         }
         // Destructor (default)
         ~MotorNode() override = default;
-        void  motor_set_speed(const uint8_t l, const uint8_t r) {
-            wheel_speeds_.l = l;
-            wheel_speeds_.r = r;
+        void motor_set_speed(const uint8_t l, const uint8_t r) {
+            wheel_speeds_[0] = l;
+            wheel_speeds_[1] = r;
         }
-
+        uint8_t wheel_speeds_[2] = {127, 127};
 
 
     private:
-        WheelSpeeds  wheel_speeds_{.l = 127,.r=127};
+
 
         void encoder_print(const std_msgs::msg::UInt32MultiArray::SharedPtr msg) {
             auto speeds_ = msg->data;
-            RCLCPP_INFO(get_logger(), "speed_left: %d", speeds_[0]);
-            RCLCPP_INFO(get_logger(), "speed_right: %d", speeds_[1]);
+            //RCLCPP_INFO(get_logger(), "speed_left: %d", speeds_[0]);
+            //RCLCPP_INFO(get_logger(), "speed_right: %d", speeds_[1]);
 
 
         }
         void set_speed_() {
             auto msg = std_msgs::msg::UInt8MultiArray();
-            msg.data = {wheel_speeds_.l, wheel_speeds_.r};
+            msg.data = {wheel_speeds_[0], wheel_speeds_[1]};
             motor_pub_->publish(msg);
         }
         // Subscriber for motor encoders

@@ -14,3 +14,4 @@ endmacro()
 
 make_units_test(example)
 make_units_test(kinematics)
+make_units_test(line_pos)
