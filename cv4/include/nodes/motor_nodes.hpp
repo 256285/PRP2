@@ -8,8 +8,8 @@
 
 namespace nodes {
 
-    };
 
+    static inline uint8_t wheel_speeds_[2] = {127, 127};
     class MotorNode : public rclcpp::Node {
     public:
 
@@ -21,17 +21,17 @@ namespace nodes {
             motor_pub_ = this->create_publisher<std_msgs::msg::UInt8MultiArray>(
                 "bpc_prp_robot/set_motor_speeds", 1);
             timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(static_cast<int>(1000.0 / 10)),
+            std::chrono::milliseconds(static_cast<int>(1000.0 / 40)),
             std::bind(&MotorNode::set_speed_, this));
 
         }
         // Destructor (default)
         ~MotorNode() override = default;
-        void motor_set_speed(const uint8_t l, const uint8_t r) {
+       static  void motor_set_speed(const uint8_t l, const uint8_t r) {
             wheel_speeds_[0] = l;
             wheel_speeds_[1] = r;
         }
-        uint8_t wheel_speeds_[2] = {127, 127};
+
 
 
     private:
