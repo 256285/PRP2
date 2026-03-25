@@ -17,7 +17,7 @@ namespace nodes {
                std::bind(&LineLoop::PID, this));
         }
     private:
-        algorithms::Pid pid = algorithms::Pid (6,1.5,0.6);
+        algorithms::Pid pid = algorithms::Pid (5,1.2,0.4);
         void BangBang() {
             if (nodes::LineNode::get_discrete_line_pose() == DiscreteLinePose::LineBoth || nodes::LineNode::get_discrete_line_pose() == DiscreteLinePose::LineNone){
                 nodes::MotorNode::motor_set_speed(132,132);
