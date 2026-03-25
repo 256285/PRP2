@@ -16,6 +16,8 @@ namespace nodes {
                std::chrono::milliseconds(static_cast<int>(1000.0 / 20)),
                std::bind(&LineLoop::PID, this));
         }
+
+
     private:
         algorithms::Pid pid = algorithms::Pid (5,1.2,0.4);
         void BangBang() {
