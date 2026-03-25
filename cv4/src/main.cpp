@@ -3,9 +3,10 @@
 #include "example.hpp"
 #include "loops/line_loop.hpp"
 #include "nodes/io_nodes.hpp"
+#include "nodes/lidar_node.hpp"
 #include "nodes/line_sens.hpp"
 #include "nodes/motor_nodes.hpp"
-
+#include "loops/corridor_loop.hpp"
 
 int main(int argc, char* argv[]) {
     rclcpp::init(argc, argv);
@@ -15,9 +16,9 @@ int main(int argc, char* argv[]) {
     auto executor = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
 
     // Create multiple nodes
-    auto node1 = std::make_shared<nodes::LineNode>();
+    auto node1 = std::make_shared<nodes::LidarNode>();
     auto node2 = std::make_shared<nodes::MotorNode>();
-    auto node3 = std::make_shared<nodes::LineLoop>();
+    auto node3 = std::make_shared<nodes::CorridorLoop>();
 
 
 

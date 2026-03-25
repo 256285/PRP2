@@ -18,9 +18,10 @@ find_package(visualization_msgs REQUIRED)
 set(SRC
     ${CMAKE_SOURCE_DIR}/src/example.cpp
         ${CMAKE_SOURCE_DIR}/src/nodes/io_nodes.cpp
-        ${CMAKE_SOURCE_DIR}/src/kinematics.cpp
+        ${CMAKE_SOURCE_DIR}/src/algorithms/kinematics.cpp
 
         ${CMAKE_SOURCE_DIR}/src/loops/line_loop.cpp
+
 
 
 )

@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "nodes/line_sens.hpp"
-#include "line_pos.hpp"
+#include "../include/algorithms/line_pos.hpp"
 #include <gtest/gtest.h>
 
 TEST(LineEstimator, BasicDiscreteEstimationR) {

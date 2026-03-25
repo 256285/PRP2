@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/kinematics.hpp"
+#include "../include/algorithms/kinematics.hpp"
 #include <cmath>
 
 //using namespace algorithms;

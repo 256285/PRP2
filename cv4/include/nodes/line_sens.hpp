@@ -1,7 +1,7 @@
 #pragma once
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/u_int16_multi_array.hpp>
-#include "line_pos.hpp"
+#include "../algorithms/line_pos.hpp"
 // Public API sketch; adapt to your project
 
 namespace nodes {
