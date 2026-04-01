@@ -30,7 +30,7 @@ namespace algorithms {
             std::vector<float> back{};
 
             // TODO: Define how wide each directional sector should be (in radians)
-            constexpr float angle_range = 3.14/3;
+            constexpr float angle_range = 3.14/5;
 
             // Compute the angular step between each range reading
             auto angle_step = (angle_end - angle_start) / points.size();

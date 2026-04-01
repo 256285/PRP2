@@ -5,9 +5,7 @@
 // Public API sketch; adapt to your project
 
 namespace nodes {
-    static inline uint16_t raw[2] = {0,0};
-    static inline float calibrated[2] = {0,0};
-    static inline LineEstimator LE;
+
     class LineNode : public rclcpp::Node {
     public:
         LineNode():Node("line_node") {
@@ -17,16 +15,18 @@ namespace nodes {
         ~LineNode() override = default;
 
         // Relative pose to line [m]
-        static float  get_continuous_line_pose() {
+         float  get_continuous_line_pose() {
            return LE.estimate_continuous(calibrated[0], calibrated[1]);
         }
 
-        static DiscreteLinePose  get_discrete_line_pose() {
+         DiscreteLinePose  get_discrete_line_pose() {
             return LE.estimate_discrete(calibrated[0], calibrated[1]);
         }
 
     private:
-
+         uint16_t raw[2] = {0,0};
+         float calibrated[2] = {0,0};
+         LineEstimator LE;
 
 
         rclcpp::Subscription<std_msgs::msg::UInt16MultiArray>::SharedPtr line_sensors_subscriber_;
