@@ -47,7 +47,7 @@ namespace nodes {
         double t_prev = 0;
         float yaw_ref = 0;
         void calibrate(float z) {
-            if (gyro_calibration_samples_.size()<500) {
+            if (gyro_calibration_samples_.size()<200) {
                 gyro_calibration_samples_.push_back(z);
             }
             else {
@@ -80,7 +80,7 @@ namespace nodes {
             else if (getMode()==ImuNodeMode::INTEGRATE) {
 
                 integrate(msg->header.stamp.sec, msg->header.stamp.nanosec, msg->angular_velocity.z);
-                RCLCPP_INFO(get_logger(), "%f", planar_integrator_.getYaw());
+                //RCLCPP_INFO(get_logger(), "%f", planar_integrator_.getYaw());
                 //float current_yaw = planar_integrator_.getYaw();
 
                 //float yaw_error = yaw_ref - current_yaw;

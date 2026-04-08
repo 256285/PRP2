@@ -4,6 +4,7 @@
 #include <std_msgs/msg/u_int8.hpp>
 #include <std_msgs/msg/u_int8_multi_array.hpp>
 #include <std_msgs/msg/u_int32_multi_array.hpp>
+#include "algorithms/kinematics.hpp"
 
 
 namespace nodes {
@@ -31,14 +32,21 @@ namespace nodes {
             wheel_speeds_[0] = l;
             wheel_speeds_[1] = r;
         }
+        algorithms::Coordinates motor_get_encoder() {
+           return kinematics_.forward(encoders_);
+       }
 
 
 
     private:
 
+        algorithms::Kinematics kinematics_;
+        algorithms::Encoders encoders_;
         uint8_t wheel_speeds_[2] = {127, 127};
         void encoder_print(const std_msgs::msg::UInt32MultiArray::SharedPtr msg) {
             auto speeds_ = msg->data;
+            encoders_.l = msg->;
+            encoders_.r = msg->data[2];//TODOOOOOOOOO
             //RCLCPP_INFO(get_logger(), "speed_left: %d", speeds_[0]);
             //RCLCPP_INFO(get_logger(), "speed_right: %d", speeds_[1]);
 

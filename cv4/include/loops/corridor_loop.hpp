@@ -31,7 +31,7 @@ namespace nodes {
         std::shared_ptr<nodes::MotorNode> motor_node;
         std::shared_ptr<nodes::ImuNode> imu_node;
         std::shared_ptr<nodes::LidarNode> lidar_node;
-        algorithms::Pid pid = algorithms::Pid (10,8,2);
+        algorithms::Pid pid = algorithms::Pid (4,3.7,0);
         float yaw_ref;
         corridor_mode mode = corridor_mode::CALIBRATION;
         void state_machine() {
@@ -51,12 +51,17 @@ namespace nodes {
                     // If front is blocked and one side is open → switch to TURNING
                     auto pos = lidar_node->get_filter_result().left - lidar_node->get_filter_result().right;
                     if (std::isnan(pos)) {pos = 0;}
-                    if(pos > 0.2){pos = 0;}
-                    if(pos < -0.2){pos = 0;}
+                    if(lidar_node->get_filter_result().left> 0.45){pos = 0;}
+                    if(lidar_node->get_filter_result().right> 0.45){pos = 0;}
 
 
-                    RCLCPP_INFO(get_logger(), "pos %f",lidar_node->get_filter_result().front);
-                    if (lidar_node->get_filter_result().front < 0.2) {
+
+                    RCLCPP_INFO(get_logger(), "front %f",lidar_node->get_filter_result().front);
+                    RCLCPP_INFO(get_logger(), "left %f",lidar_node->get_filter_result().left);
+                    RCLCPP_INFO(get_logger(), "right %f",lidar_node->get_filter_result().right);
+                    RCLCPP_INFO(get_logger(), "pos %f",pos);
+                    if (lidar_node->get_filter_result().front < 0.6) {
+
                         motor_node->motor_set_speed(127,127);
                         yaw_ref = imu_node->getIntegratedResults();
                         mode = corridor_mode::TURNING;
@@ -64,7 +69,7 @@ namespace nodes {
 
                     else {
                         auto output = pid.step(pos,0.05);
-                        motor_node->motor_set_speed(135 - output,135 + output);
+                        motor_node->motor_set_speed(138 - output,138 + output);
                     }
                     break;
                 }
@@ -74,7 +79,7 @@ namespace nodes {
                     // Rotate until yaw changes by ±90°
                     // Then return to CORRIDOR_FOLLOWING
                     if (imu_node->getIntegratedResults()-yaw_ref < 3.14/2) {
-                        motor_node->motor_set_speed(122,132);
+                        motor_node->motor_set_speed(112,142);
                     }
                     else {mode = corridor_mode::CORRIDOR_FOLLOWING;}
                     break;

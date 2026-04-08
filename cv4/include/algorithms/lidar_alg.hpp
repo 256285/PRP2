@@ -30,7 +30,7 @@ namespace algorithms {
             std::vector<float> back{};
 
             // TODO: Define how wide each directional sector should be (in radians)
-            constexpr float angle_range = 3.14/5;
+            constexpr float angle_range = 3.14/12;
 
             // Compute the angular step between each range reading
             auto angle_step = (angle_end - angle_start) / points.size();
@@ -40,14 +40,14 @@ namespace algorithms {
 
                 // TODO: Skip invalid (infinite) readings
 
-                if (points[i] < 0.015 || points[i] > 12) {continue;}
+                if (points[i] < 0.15 || points[i] > 12) {continue;}
 
                 // TODO: Sort the value into the correct directional bin based on angle
                 if (angle > 0-angle_range && angle < 0+angle_range) {
                     back.push_back(points[i]);
-                } else if (angle > 3.14/2-angle_range && angle < 3.14/2+angle_range) {
+                } else if (angle > 3*3.14/4-angle_range && angle < 3*3.14/4+angle_range) {
                     right.push_back(points[i]);
-                } else if (angle > -3.14/2-angle_range && angle < -3.14/2+angle_range) {
+                } else if (angle > -3*3.14/4-angle_range && angle < -3*3.14/4+angle_range) {
                     left.push_back(points[i]);
                 } else if (angle > 3.14-angle_range || angle < -3.14/2+angle_range) {
                     front.push_back(points[i]);
