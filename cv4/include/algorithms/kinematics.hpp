@@ -26,6 +26,7 @@ namespace algorithms {
         int ticks_revolution = 576;
     public:
         Kinematics(double wheel_radius, double wheel_base, int ticks_revolution):wheel_radius(wheel_radius),wheel_base(wheel_base),ticks_revolution(ticks_revolution){}
+        Kinematics() = default;
         RobotSpeed forward(WheelSpeed x) const;
         WheelSpeed inverse(RobotSpeed x) const;
         Coordinates forward(Encoders x) const;

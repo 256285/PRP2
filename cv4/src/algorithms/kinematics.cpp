@@ -19,8 +19,8 @@ namespace algorithms {
     }
     Coordinates Kinematics:: forward(Encoders x) const {
         Coordinates result;
-        float dl = Kinematics::wheel_radius * x.l;
-        float dr = Kinematics::wheel_radius * x.r;
+        float dl = Kinematics::wheel_radius* x.l/Kinematics::ticks_revolution;
+        float dr = Kinematics::wheel_radius * x.r/Kinematics::ticks_revolution;
         float delta_d = (dl+dr)/2;
         float delta_theta = (dr-dl)/Kinematics::wheel_base;
         result.x = delta_d*cos(delta_theta/2);

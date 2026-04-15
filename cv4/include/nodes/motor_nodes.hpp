@@ -7,16 +7,18 @@
 #include "algorithms/kinematics.hpp"
 
 
+
 namespace nodes {
 
 
 
     class MotorNode : public rclcpp::Node {
+        algorithms::Kinematics kinematics_;
     public:
 
         // Constructor
         MotorNode(): Node("motor_node") {
-
+            kinematics_ = algorithms::Kinematics();
             motor_sub_ = this->create_subscription<std_msgs::msg::UInt32MultiArray>(
                 "/bpc_prp_robot/encoders", 1, std::bind(&MotorNode::encoder_print, this, std::placeholders::_1  ));
             motor_pub_ = this->create_publisher<std_msgs::msg::UInt8MultiArray>(
@@ -40,13 +42,13 @@ namespace nodes {
 
     private:
 
-        algorithms::Kinematics kinematics_;
+
         algorithms::Encoders encoders_;
         uint8_t wheel_speeds_[2] = {127, 127};
         void encoder_print(const std_msgs::msg::UInt32MultiArray::SharedPtr msg) {
             auto speeds_ = msg->data;
-            encoders_.l = msg->;
-            encoders_.r = msg->data[2];//TODOOOOOOOOO
+            encoders_.l = msg->data[0];
+            encoders_.r = -msg->data[1];
             //RCLCPP_INFO(get_logger(), "speed_left: %d", speeds_[0]);
             //RCLCPP_INFO(get_logger(), "speed_right: %d", speeds_[1]);
 

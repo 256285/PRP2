@@ -45,11 +45,14 @@ namespace algorithms {
                 // TODO: Sort the value into the correct directional bin based on angle
                 if (angle > 0-angle_range && angle < 0+angle_range) {
                     back.push_back(points[i]);
-                } else if (angle > 3*3.14/4-angle_range && angle < 3*3.14/4+angle_range) {
+                }
+                if (angle > 3*3.14/4-angle_range && angle < 3*3.14/4+angle_range) {
                     right.push_back(points[i]);
-                } else if (angle > -3*3.14/4-angle_range && angle < -3*3.14/4+angle_range) {
+                }
+                if (angle > -3*3.14/4-angle_range && angle < -3*3.14/4+angle_range) {
                     left.push_back(points[i]);
-                } else if (angle > 3.14-angle_range || angle < -3.14/2+angle_range) {
+                }
+                if (angle > 3.14-angle_range || angle < -3.14+angle_range) {
                     front.push_back(points[i]);
                 }
             }
