@@ -22,8 +22,8 @@ int main(int argc, char* argv[]) {
     auto node2 = std::make_shared<nodes::MotorNode>();
     auto node3 = std::make_shared<nodes::ImuNode>();
     auto node4 = std::make_shared<nodes::CorridorLoop>();
-    //auto node5 = std::make_shared<nodes::CameraNode>();
-    node4->init(node2,node3,node1);
+    auto node5 = std::make_shared<nodes::CameraNode>();
+    node4->init(node2,node3,node1,node5);
 
 
     // Add nodes to the executor
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     executor->add_node(node2);
     executor->add_node(node3);
     executor->add_node(node4);
-    //executor->add_node(node5);
+    executor->add_node(node5);
 
     // Run the executor (handles callbacks for both nodes)
     executor->spin();

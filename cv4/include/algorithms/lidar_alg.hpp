@@ -11,6 +11,10 @@ namespace algorithms {
         float back;
         float left;
         float right;
+        float front_left;
+        float back_left;
+        float front_right;
+        float back_right;
     };
     float vector_average(std::vector<float> vector) {
         float sum = std::accumulate(vector.begin(), vector.end(), 0.0);
@@ -25,7 +29,11 @@ namespace algorithms {
 
             // Create containers for values in different directions
             std::vector<float> left{};
+            std::vector<float> front_left{};
+            std::vector<float> back_left{};
             std::vector<float> right{};
+            std::vector<float> front_right{};
+            std::vector<float> back_right{};
             std::vector<float> front{};
             std::vector<float> back{};
 
@@ -47,13 +55,25 @@ namespace algorithms {
                     back.push_back(points[i]);
                 }
                 if (angle > 3*3.14/4-angle_range && angle < 3*3.14/4+angle_range) {
-                    right.push_back(points[i]);
+                    front_right.push_back(points[i]);
                 }
                 if (angle > -3*3.14/4-angle_range && angle < -3*3.14/4+angle_range) {
-                    left.push_back(points[i]);
+                    front_left.push_back(points[i]);
+                }
+                if (angle > 3.14/4-angle_range && angle < 3.14/4+angle_range) {
+                    back_right.push_back(points[i]);
+                }
+                if (angle > -3.14/4-angle_range && angle < -3.14/4+angle_range) {
+                    back_left.push_back(points[i]);
                 }
                 if (angle > 3.14-angle_range || angle < -3.14+angle_range) {
                     front.push_back(points[i]);
+                }
+                if (angle > 3.14/2-angle_range && angle < 3.14/2+angle_range) {
+                    right.push_back(points[i]);
+                }
+                if (angle > -3.14/2-angle_range && angle < -3.14/2+angle_range) {
+                    left.push_back(points[i]);
                 }
             }
 
@@ -63,6 +83,10 @@ namespace algorithms {
                 .back = vector_average(back),
                 .left = vector_average(left),
                 .right = vector_average(right),
+                .front_left = vector_average(front_left),
+                .back_left = vector_average(back_left),
+                .front_right = vector_average(front_right),
+                .back_right = vector_average(back_right),
             };
         }
     };
