@@ -6,6 +6,7 @@
 namespace nodes {
 
     class LidarNode : public rclcpp::Node {
+        uint64_t time;
 
     public:
 
@@ -16,12 +17,17 @@ namespace nodes {
         auto get_filter_result() {
             return lidar_filter_result;
         }
+        bool isError() {
+            return this->now().nanoseconds() - time > 500000000;
+        }
         private:
         algorithms::LidarFilterResults lidar_filter_result;
         void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
             auto data = lidar_filter_.apply_filter(msg->ranges,msg->angle_min,msg->angle_max);
             lidar_filter_result = data;
+            time = this->now().nanoseconds();
             //RCLCPP_INFO(get_logger(), "left: %f, right: %f, front: %f, back: %f ", data.left, data.right, data.front, data.back);
+            RCLCPP_INFO(get_logger(), "lidar");
         };
         rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr lidar_sub_;
         algorithms::LidarFilter lidar_filter_;

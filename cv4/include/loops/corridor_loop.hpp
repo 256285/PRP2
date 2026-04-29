@@ -60,10 +60,14 @@ namespace nodes {
 
             RCLCPP_INFO(get_logger(), "mode %d next %d dir %d",mode, next_mode, dir);
             //RCLCPP_INFO(get_logger(), "prev %f %f",prev.x, prev.y);
-            RCLCPP_INFO(get_logger(), "front %f back_left %f back_right %f",lidar_node->get_filter_result().front, lidar_node->get_filter_result().back_left, lidar_node->get_filter_result().back_right);
+            RCLCPP_INFO(get_logger(), "back %f back_left %f back_right %f",lidar_node->get_filter_result().back, lidar_node->get_filter_result().back_left, lidar_node->get_filter_result().back_right);
             RCLCPP_INFO(get_logger(), "front %f front_left %f front_right %f",lidar_node->get_filter_result().front, lidar_node->get_filter_result().front_left, lidar_node->get_filter_result().front_right);
 
-            //mode = corridor_mode::BACK_FOLLOWING;
+            if (lidar_node->isError() && mode != corridor_mode::CALIBRATION) {
+                motor_node->motor_set_speed(127,127);
+                return;
+            }
+            //mode = corridor_mode::CORRIDOR_FOLLOWING;
             switch (mode) {
                 case corridor_mode::CALIBRATION: {
 
@@ -81,31 +85,26 @@ namespace nodes {
                     // Keep centered using P/PID based on side distances
                     // If front is blocked and one side is opeSTRAIGHTn → switch to TURNING
                     auto pos = lidar_node->get_filter_result().front_left - lidar_node->get_filter_result().front_right;
-                    if (std::isnan(lidar_node->get_filter_result().front_left)) {pos = - lidar_node->get_filter_result().front_right;}
-                    else if (std::isnan(lidar_node->get_filter_result().front_right)) {pos = lidar_node->get_filter_result().front_left;}
                     if (std::isnan(pos)) {pos = 0;}
                     next_dir = dir;
                     yaw_ref = imu_node->getIntegratedResults();
-                    if(lidar_node->get_filter_result().front_left> 0.43 ||lidar_node->get_filter_result().front_right> 0.43) {
+
+                    if (std::isnan(lidar_node->get_filter_result().front_left) || std::isnan(lidar_node->get_filter_result().left)) {pos = - lidar_node->get_filter_result().front_right;}
+                    else if (std::isnan(lidar_node->get_filter_result().front_right) || std::isnan(lidar_node->get_filter_result().right)) {pos = lidar_node->get_filter_result().front_left;}
+                    else if(lidar_node->get_filter_result().front_left> 0.43 || lidar_node->get_filter_result().front_right> 0.43) {
                         //prev = motor_node->motor_get_encoder();
-                            prev = lidar_node->get_filter_result().back;
-
+                        prev = lidar_node->get_filter_result().back;
                         mode = corridor_mode::BACK_FOLLOWING;
-
                     }
-
-
-
-
 
                     //RCLCPP_INFO(get_logger(), "left %f",lidar_node->get_filter_result().left);
                     //RCLCPP_INFO(get_logger(), "right %f",lidar_node->get_filter_result().right);
                     //RCLCPP_INFO(get_logger(), "pos %f",pos);
                     if (lidar_node->get_filter_result().front < 0.3) {
-                           // prev = motor_node->motor_get_encoder();
-                            prev = lidar_node->get_filter_result().back;
-                            mode = corridor_mode::STRAIGHT;
-                        }
+                        // prev = motor_node->motor_get_encoder();
+                        prev = lidar_node->get_filter_result().back;
+                        mode = corridor_mode::STRAIGHT;
+                    }
 
 
                     else {
@@ -123,7 +122,9 @@ namespace nodes {
                     //else if (std::isnan(lidar_node->get_filter_result().back_right)) {pos = lidar_node->get_filter_result().back_left;}
                     //if (std::isnan(pos)) {pos = 0;}
                     auto pos = yaw_ref - imu_node->getIntegratedResults();
-                    if (lidar_node->get_filter_result().front_left< 0.35 && lidar_node->get_filter_result().front_right< 0.35) {
+                    if (lidar_node->get_filter_result().front_left< 0.4 && lidar_node->get_filter_result().front_right< 0.4
+                        || std::isnan(lidar_node->get_filter_result().front_left) || std::isnan(lidar_node->get_filter_result().front_right)
+                        || std::isnan(lidar_node->get_filter_result().left) || std::isnan(lidar_node->get_filter_result().right)) {
                         mode = corridor_mode::CORRIDOR_FOLLOWING;
                     }
                     if (lidar_node->get_filter_result().front < 0.25 || distance > 0.2 ) {
@@ -172,7 +173,7 @@ namespace nodes {
                     if (distance > 0.37) {
                         mode = corridor_mode::STOP;
                     }
-                    if (lidar_node->get_filter_result().front < 0.23) {
+                    if (lidar_node->get_filter_result().front < 0.25) {
                         mode = corridor_mode::STOP;
                     }
                 }
