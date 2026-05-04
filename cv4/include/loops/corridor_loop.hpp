@@ -92,15 +92,20 @@ namespace nodes {
                     if (std::isnan(lidar_node->get_filter_result().front_left) || std::isnan(lidar_node->get_filter_result().left)) {pos = - lidar_node->get_filter_result().front_right;}
                     else if (std::isnan(lidar_node->get_filter_result().front_right) || std::isnan(lidar_node->get_filter_result().right)) {pos = lidar_node->get_filter_result().front_left;}
                     else if(lidar_node->get_filter_result().front_left> 0.43 || lidar_node->get_filter_result().front_right> 0.43) {
-                        //prev = motor_node->motor_get_encoder();
-                        prev = lidar_node->get_filter_result().back;
-                        mode = corridor_mode::BACK_FOLLOWING;
+                        if (lidar_node->get_filter_result().left < 0.3 && lidar_node->get_filter_result().right < 0.3) {
+                            pos = lidar_node->get_filter_result().left - lidar_node->get_filter_result().right;
+                        }
+                        else {
+                            //prev = motor_node->motor_get_encoder();
+                            prev = lidar_node->get_filter_result().back;
+                            mode = corridor_mode::BACK_FOLLOWING;
+                        }
                     }
 
                     //RCLCPP_INFO(get_logger(), "left %f",lidar_node->get_filter_result().left);
                     //RCLCPP_INFO(get_logger(), "right %f",lidar_node->get_filter_result().right);
                     //RCLCPP_INFO(get_logger(), "pos %f",pos);
-                    if (lidar_node->get_filter_result().front < 0.3) {
+                    if (lidar_node->get_filter_result().front < 0.25) {
                         // prev = motor_node->motor_get_encoder();
                         prev = lidar_node->get_filter_result().back;
                         mode = corridor_mode::STRAIGHT;
@@ -114,6 +119,7 @@ namespace nodes {
                     break;
                 }
                 case corridor_mode::BACK_FOLLOWING: {
+
                     float current = lidar_node->get_filter_result().back;
                     //float distance = hypotf(current.x - prev.x, current.y - prev.y);
                     float distance = current - prev;
@@ -131,6 +137,7 @@ namespace nodes {
                         mode = corridor_mode::STRAIGHT;
                     }
                     else {
+
                         auto output = pid.step(pos,0.05);
                         motor_node->motor_set_speed(140 - output,140 + output);
                     }
