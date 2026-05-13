@@ -1,10 +1,10 @@
 #pragma once
+
 #include <cmath>
 #include <vector>
 #include <numeric>
 
 namespace algorithms {
-
     // Structure to store filtered average distances in key directions
     struct LidarFilterResults {
         float front;
@@ -16,7 +16,9 @@ namespace algorithms {
         float front_right;
         float back_right;
     };
-    float vector_average(std::vector<float> vector) {
+
+    // Function to calculate average of float vector
+    inline float vector_average(std::vector<float> vector) {
         float sum = std::accumulate(vector.begin(), vector.end(), 0.0);
         return sum / vector.size();
     }
@@ -24,8 +26,10 @@ namespace algorithms {
     class LidarFilter {
     public:
         LidarFilter() = default;
+        ~LidarFilter() = default;
 
-        LidarFilterResults apply_filter(std::vector<float> points, float angle_start, float angle_end) {
+        // Return filtered average distances in key directions
+        static LidarFilterResults apply_filter(std::vector<float> points, float angle_start, float angle_end) {
 
             // Create containers for values in different directions
             std::vector<float> left{};
@@ -37,47 +41,46 @@ namespace algorithms {
             std::vector<float> front{};
             std::vector<float> back{};
 
-            // TODO: Define how wide each directional sector should be (in radians)
-            constexpr float angle_range = 3.14/12;
+            // How wide each directional sector should be (in radians)
+            constexpr float angle_range = M_PI/12;
 
             // Compute the angular step between each range reading
             auto angle_step = (angle_end - angle_start) / points.size();
 
             for (size_t i = 0; i < points.size(); ++i) {
-                auto angle = angle_start + i * angle_step;
+                const float angle = angle_start + i * angle_step;
 
-                // TODO: Skip invalid (infinite) readings
+                // Skip invalid (infinite) readings
+                if (points[i] < 0.15 || points[i] > 12) continue;
 
-                if (points[i] < 0.15 || points[i] > 12) {continue;}
-
-                // TODO: Sort the value into the correct directional bin based on angle
+                // Sort the value into the correct directional bin based on angle
                 if (angle > 0-angle_range && angle < 0+angle_range) {
                     back.push_back(points[i]);
                 }
-                if (angle > 3*3.14/4-angle_range && angle < 3*3.14/4+angle_range) {
+                if (angle > 3*M_PI/4-angle_range && angle < 3*M_PI/4+angle_range) {
                     front_right.push_back(points[i]);
                 }
-                if (angle > -3*3.14/4-angle_range && angle < -3*3.14/4+angle_range) {
+                if (angle > -3*M_PI/4-angle_range && angle < -3*M_PI/4+angle_range) {
                     front_left.push_back(points[i]);
                 }
-                if (angle > 3.14/4-angle_range && angle < 3.14/4+angle_range) {
+                if (angle > M_PI/4-angle_range && angle < M_PI/4+angle_range) {
                     back_right.push_back(points[i]);
                 }
-                if (angle > -3.14/4-angle_range && angle < -3.14/4+angle_range) {
+                if (angle > -M_PI/4-angle_range && angle < -M_PI/4+angle_range) {
                     back_left.push_back(points[i]);
                 }
-                if (angle > 3.14-angle_range || angle < -3.14+angle_range) {
+                if (angle > M_PI-angle_range || angle < -M_PI+angle_range) {
                     front.push_back(points[i]);
                 }
-                if (angle > 3.14/2-angle_range && angle < 3.14/2+angle_range) {
+                if (angle > M_PI/2-angle_range && angle < M_PI/2+angle_range) {
                     right.push_back(points[i]);
                 }
-                if (angle > -3.14/2-angle_range && angle < -3.14/2+angle_range) {
+                if (angle > -M_PI/2-angle_range && angle < -M_PI/2+angle_range) {
                     left.push_back(points[i]);
                 }
             }
 
-            // TODO: Return the average of each sector (basic mean filter)
+            // Return the average of each sector (basic mean filter)
             return LidarFilterResults{
                 .front = vector_average(front),
                 .back = vector_average(back),

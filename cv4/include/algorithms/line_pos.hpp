@@ -1,32 +1,40 @@
 #pragma once
 
-enum class DiscreteLinePose {
-    LineOnLeft,
-    LineOnRight,
-    LineNone,
-    LineBoth,
-};
+namespace algorithms {
+    enum class DiscreteLinePose {
+        LineOnLeft,
+        LineOnRight,
+        LineNone,
+        LineBoth,
+    };
 
     class LineEstimator {
     public:
-        static DiscreteLinePose estimate_discrete(float left_val, float right_val) {
+        LineEstimator() = default;
+        ~LineEstimator() = default;
+
+        // Return discrete position of line
+        static DiscreteLinePose estimate_discrete(const float left_val, const float right_val) {
             DiscreteLinePose result;
-            float threshold = 0.33;
+            constexpr float threshold = 0.33;
             if (left_val > threshold) {
                 if (right_val > threshold) {
                     result = DiscreteLinePose::LineBoth;
+                } else {
+                    result = DiscreteLinePose::LineOnLeft;
                 }
-                else {result = DiscreteLinePose::LineOnLeft;}
             }
             else if (right_val > threshold) {
                 result = DiscreteLinePose::LineOnRight;
             }
-            else {result = DiscreteLinePose::LineNone;}
+            else {
+                result = DiscreteLinePose::LineNone;
+            }
             return result;
         }
-        static float estimate_continuous(float left_val, float right_val) {
+        // Return continuous estimation of line position
+        static float estimate_continuous(const float left_val, const float right_val) {
             return left_val - right_val;
         }
-
-
     };
+}

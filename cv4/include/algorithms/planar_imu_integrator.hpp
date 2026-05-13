@@ -1,32 +1,29 @@
 #pragma once
-#include <iostream>
-#include <cmath>
-#include <numeric>
+
 #include <algorithms/lidar_alg.hpp>
 
 namespace algorithms {
-
     class PlanarImuIntegrator {
     public:
-
         PlanarImuIntegrator() : theta_(0.0f), gyro_offset_(0.0f) {}
+        ~PlanarImuIntegrator() = default;
 
-        // TODO: Call this regularly to integrate gyro_z over time
-        void update(float gyro_z, double dt) {
-            theta_ += (gyro_z-gyro_offset_) * dt;
+        // Call this regularly to integrate gyro_z over time
+        void update(const float gyro_z, const double dt) {
+            theta_ += (gyro_z - gyro_offset_) * dt;
         }
 
-        // TODO: Calibrate the gyroscope by computing average from static samples
+        // Calibrate the gyroscope by computing average from static samples
         void setCalibration(std::vector<float> gyro) {
             gyro_offset_ = algorithms::vector_average(gyro);
         }
 
-        // TODO: Return the current estimated yaw
+        // Return the current estimated yaw
         [[nodiscard]] float getYaw() const {
             return theta_;
         }
 
-        // TODO: Reset orientation and calibration
+        // Reset orientation and calibration
         void reset() {
             theta_ = 0.0f;
             gyro_offset_ = 0.0f;

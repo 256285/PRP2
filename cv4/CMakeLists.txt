@@ -17,20 +17,14 @@ find_package(visualization_msgs REQUIRED)
 
 set(SRC
     ${CMAKE_SOURCE_DIR}/src/example.cpp
-        ${CMAKE_SOURCE_DIR}/src/nodes/io_nodes.cpp
-        ${CMAKE_SOURCE_DIR}/src/algorithms/kinematics.cpp
-
-        ${CMAKE_SOURCE_DIR}/src/loops/line_loop.cpp
-
-
-
+    ${CMAKE_SOURCE_DIR}/src/nodes/io_node.cpp
+    ${CMAKE_SOURCE_DIR}/src/algorithms/kinematics.cpp
+    ${CMAKE_SOURCE_DIR}/src/loops/line_loop.cpp
 )
 
 set(AMENT_LIBS rclcpp std_msgs sensor_msgs cv_bridge image_transport)
 
-add_executable(${PROJECT_NAME} src/main.cpp ${SRC}
-        src/nodes/io_nodes.cpp
-        )
+add_executable(${PROJECT_NAME} src/main.cpp ${SRC})
 target_include_directories(${PROJECT_NAME} PUBLIC
         include
         ${OpenCV_INCLUDE_DIRS}

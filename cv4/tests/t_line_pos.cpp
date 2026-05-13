@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <gtest/gtest.h>
 
-#include "nodes/line_sens.hpp"
+#include "nodes/line_node.hpp"
 #include "../include/algorithms/line_pos.hpp"
 #include <gtest/gtest.h>
 
