@@ -20,6 +20,7 @@ set(SRC
     ${CMAKE_SOURCE_DIR}/src/nodes/io_node.cpp
     ${CMAKE_SOURCE_DIR}/src/algorithms/kinematics.cpp
     ${CMAKE_SOURCE_DIR}/src/loops/line_loop.cpp
+    ${CMAKE_SOURCE_DIR}/src/loops/corridor_loop.cpp
 )
 
 set(AMENT_LIBS rclcpp std_msgs sensor_msgs cv_bridge image_transport)

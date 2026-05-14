@@ -35,11 +35,11 @@ namespace nodes {
     private:
         algorithms::ArucoDetector aruco_detector_;              // detector class
         cv::Mat image_;                                         // image class
-        std::vector<algorithms::ArucoDetector::Aruco> arucos;   // saved results vector
+        std::vector<algorithms::Aruco> arucos;   // saved results vector
         Direction direction;                                    // enum of last found direction
         Direction treas_direction;                              // enum of direction to treasure
 
-        void preferred_direction(std::vector<algorithms::ArucoDetector::Aruco> v) {
+        void preferred_direction(std::vector<algorithms::Aruco> v) {
            for (size_t i = 0; i < v.size(); ++i) {
                if (v[i].id == 0) direction = Direction::STRAIGHT;
                else if (v[0].id == 1) direction = Direction::LEFT;
