@@ -1,14 +1,22 @@
 \section{Introduction}
 
-Vivamus ac leo pretium faucibus. Etiam posuere lacus quis dolor. Donec vitae arcu. Nullam eget nisl. Integer lacinia. Morbi scelerisque luctus velit. Pellentesque pretium lectus id turpis. Aliquam id dolor. Integer pellentesque quam vel velit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+Autonomous navigation in unknown or semi-structured environments is one of the fundamental problems in mobile robotics. Even relatively simple maze environments introduce multiple practical challenges, including noisy sensor measurements, imperfect localization, unstable control loops, and mechanical inaccuracies of the robot platform.
 
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. In enim a arcu imperdiet malesuada. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Vivamus porttitor turpis ac leo. Nam sed tellus id magna elementum tincidunt. Pellentesque arcu. Suspendisse sagittis ultrices augue. Integer vulputate sem a nibh rutrum consequat. Etiam dictum tincidunt diam. Et harum quidem rerum facilis est et expedita distinctio. In rutrum. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Nam sed tellus id magna elementum tincidunt. Nullam faucibus mi quis velit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Maecenas libero. Nulla pulvinar eleifend sem. Curabitur bibendum justo non orci. Maecenas libero. Fusce wisi \cite{kalman1960new}.
+The goal of this project was to design and implement a fully autonomous robot capable of navigating through a maze environment while reacting to visual navigation hints and maintaining stable movement inside corridors. The project was developed as part of the BPC-PRP course and combines multiple robotics disciplines into a single integrated system.
+
+The implemented robot uses several sensing modalities simultaneously:\newline
+- LiDAR for corridor detection and distance estimation\newline
+- IMU for orientation tracking and turning stabilization\newline
+- Wheel encoders for odometry feedback\newline
+- Reflective line sensors for line following\newline
+- Camera for ArUco marker recognition
+
+The complete software solution was implemented using ROS2 and modular C++ nodes. The modular architecture allowed independent testing of individual subsystems and simplified debugging during development.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.45\textwidth]{images/rover.jpg}
-    \caption{The mars rover}
-    \label{fig:mars_rover}
+    \includegraphics[width=0.45\textwidth]{images/render.png}
+    \caption{Implemented autonomous robot platform [3]}
+    \label{fig:robot}
 \end{figure}
 
-Quisque tincidunt scelerisque libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Proin in tellus sit amet nibh dignissim sagittis. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Aliquam ornare wisi eu metus. Curabitur bibendum justo non orci. Aliquam erat volutpat. Duis ante orci, molestie vitae vehicula venenatis, tincidunt ac pede. Duis sapien nunc, commodo et, interdum suscipit, sollicitudin et, dolor. Etiam commodo dui eget wisi. Nam quis nulla. Etiam dictum tincidunt diam. \cite{grisetti2010tutorial}

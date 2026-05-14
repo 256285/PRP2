@@ -14,7 +14,7 @@
     
 \begin{document}
 
-\title{BPC-PRP Project Documentation}
+\title{Maze Escape Robot for BPC-PRP}
 
 \author{\IEEEauthorblockN{Stanislav Doubravský}
 \IEEEauthorblockA{\textit{Fakulta elektrotechniky a komunikačních technologií} \\
@@ -32,7 +32,11 @@ Brno, Czech Republic \\
 \maketitle
 
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi scelerisque luctus velit. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Vivamus luctus egestas leo. Nulla non arcu lacinia neque faucibus fringilla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Mauris metus. Aliquam erat volutpat. Nullam eget nisl. Fusce wisi. Vestibulum fermentum tortor id mi.
+This project focuses on the implementation of an autonomous mobile robot designed for the final “Maze Escape” task in the course BPC-PRP (Practical Robotics and Computer Vision). The robot is based on a differential drive platform equipped with LiDAR, IMU, line sensors, wheel encoders, and a camera. The software architecture was implemented in C++ using ROS2 and is divided into modular nodes responsible for sensing, filtering, estimation, and control.
+
+The main objective of the project was to create a robust navigation system capable of following corridors, detecting intersections, recognizing visual navigation hints using ArUco markers, and performing stable turns in a maze environment. Particular attention was paid to real-time sensor fusion, modular software design, and reliable control loops suitable for noisy sensor measurements and imperfect mechanical properties of the robot.
+
+The resulting solution combines several robotics concepts taught during the semester, including PID regulation, odometry, inertial integration, LiDAR processing, finite state machines, and computer vision.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -46,7 +50,13 @@ Robotics, project, BPC-PRP, state-of-the-art
 
 
 \section*{Acknowledgment}
-Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aliquam erat volutpat. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Maecenas sollicitudin.
+Sources and course materials: \newline
+[1] BPC-PRP Course Documentation: \newline
+-  \url{https://robotics-but.github.io/BPC-PRP} \newline
+[2] BPC-PRP Project Template Repository: \newline
+-  \url{https://github.com/Robotics-BUT/BPC-PRP} \newline
+[3] Fenrir Project Robot Documentation: \newline
+-  \url{https://robotics-but.github.io/fenrir-project}
 
 \printbibliography
 
