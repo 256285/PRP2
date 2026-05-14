@@ -20,6 +20,7 @@ namespace nodes {
 
         // Overwrite for testing
         //mode = corridor_mode::CORRIDOR_FOLLOWING;
+        //mode = corridor_mode::BACK_FOLLOWING;
 
         // Main switch
         switch (mode) {
@@ -46,25 +47,23 @@ namespace nodes {
                     pos = lidar_node->get_filter_result().front_left;
                 }
                 else if(lidar_node->get_filter_result().front_left > 0.43 || lidar_node->get_filter_result().front_right > 0.43) { // One side is open
-                    if (lidar_node->get_filter_result().left < 0.3 && lidar_node->get_filter_result().right < 0.3) {
-                        // Keep on L/R instead of LF/RF
-                        pos = lidar_node->get_filter_result().left - lidar_node->get_filter_result().right;
-                    }
-                    else {
+
                         //prev = motor_node->motor_get_encoder();
-                        prev = lidar_node->get_filter_result().back;
-                        next_dir = camera_node->get_direction();
+                        prev = lidar_node->get_filter_result().front;
+                        prev_distance = 0;
+                        next_dir = camera_node->get_treas_direction();
                         yaw_ref = imu_node->getIntegratedResults();
                         mode = corridor_mode::BACK_FOLLOWING;
                         return;
-                    }
+
                 }
 
                 // Front is blocked → switch to STRAIGHT
                 if (lidar_node->get_filter_result().front < 0.25) {
                     //prev = motor_node->motor_get_encoder();
-                    prev = lidar_node->get_filter_result().back;
-                    next_dir = camera_node->get_direction();
+                    prev = lidar_node->get_filter_result().front;
+                    prev_distance = 0;
+                    next_dir = camera_node->get_treas_direction();
                     yaw_ref = imu_node->getIntegratedResults();
                     mode = corridor_mode::STRAIGHT;
                     return;
@@ -72,7 +71,7 @@ namespace nodes {
 
                 //RCLCPP_INFO(get_logger(), "pos %f",pos);
                 const auto output = pid.step(pos,0.05);
-                motor_node->motor_set_speed(140.0 - output,140.0 + output);
+                motor_node->motor_set_speed(speed - output,speed + output);
                 break;
             }
 
@@ -81,9 +80,13 @@ namespace nodes {
             case corridor_mode::BACK_FOLLOWING: {
                 //auto current = motor_node->motor_get_encoder();
                 //float distance = hypotf(current.x - prev.x, current.y - prev.y);
-                const auto current = lidar_node->get_filter_result().back;
-                const auto distance = current - prev;
+                const auto current = lidar_node->get_filter_result().front;
+                auto distance =  prev - current;
 
+                if (distance < 0) prev -= distance;
+                if (std::abs(distance - prev_distance) >  0.1) prev -= distance;
+                 distance =  prev - current;
+                prev_distance = distance;
                 RCLCPP_INFO(get_logger(), "DISTANCE %f", distance);
 
                 // Switch back to CORRIDOR_FOLLOWING if it is reasonable again
@@ -91,13 +94,13 @@ namespace nodes {
                     || std::isnan(lidar_node->get_filter_result().front_left) || std::isnan(lidar_node->get_filter_result().front_right)
                     || std::isnan(lidar_node->get_filter_result().left) || std::isnan(lidar_node->get_filter_result().right)) {
                     mode = corridor_mode::CORRIDOR_FOLLOWING;
-                    return;
+                    //return;
                 }
 
                 // Front is blocked or traveled 20cm → switch to STRAIGHT
                 if (lidar_node->get_filter_result().front < 0.25 || distance > 0.2 ) {
                     mode = corridor_mode::STRAIGHT;
-                    return;
+                    //return;
                 }
 
                 // BACK_FOLLOWING - do not work
@@ -105,12 +108,18 @@ namespace nodes {
                 //if (std::isnan(lidar_node->get_filter_result().back_left)) {pos = - lidar_node->get_filter_result().back_right;}
                 //else if (std::isnan(lidar_node->get_filter_result().back_right)) {pos = lidar_node->get_filter_result().back_left;}
                 //if (std::isnan(pos)) {pos = 0;}
-
-                // Just go straight by yaw
-                const auto pos = yaw_ref - imu_node->getIntegratedResults();
-
+                float pos;
+                if (lidar_node->get_filter_result().left < 0.3 && lidar_node->get_filter_result().right < 0.3) {
+                    // Keep on L/R instead of LF/RF
+                    pos = lidar_node->get_filter_result().left - lidar_node->get_filter_result().right;
+                    pos += -lidar_node->get_filter_result().back_left + lidar_node->get_filter_result().back_right;
+                }
+                else {
+                    // Just go straight by yaw
+                     pos = yaw_ref - imu_node->getIntegratedResults();
+                }
                 const auto output = pid.step(pos,0.05);
-                motor_node->motor_set_speed(140.0 - output,140.0 + output);
+                motor_node->motor_set_speed(speed - output,speed + output);
                 break;
             }
 
@@ -120,15 +129,15 @@ namespace nodes {
             case corridor_mode::STRAIGHT: {
                 //auto current = motor_node->motor_get_encoder();
                 //float distance = hypotf(current.x - prev.x, current.y - prev.y);
-                const auto current = lidar_node->get_filter_result().back;
-                const auto distance = current - prev;
+                const auto current = lidar_node->get_filter_result().front;
+                const auto distance =  prev- current;
 
                 //  RCLCPP_INFO(get_logger(), "current %f %f",current.x, current.y);
                 RCLCPP_INFO(get_logger(), "DISTANCE %f", distance);
 
-                motor_node->motor_set_speed(140,140);
+                motor_node->motor_set_speed(speed,speed);
 
-                if (lidar_node->get_filter_result().left< 0.3 && lidar_node->get_filter_result().right< 0.3) {
+                if (lidar_node->get_filter_result().left< 0.3 && lidar_node->get_filter_result().right< 0.3 && lidar_node->get_filter_result().front< 0.5) {
                     next_mode = corridor_mode::TURN_BACK;
                 }
                 else if (lidar_node->get_filter_result().front > 0.5 && next_dir == nodes::CameraNode::Direction::STRAIGHT) {
@@ -150,7 +159,7 @@ namespace nodes {
                     next_mode = corridor_mode::TURN_R;
                 }
 
-                if (distance > 0.37) {
+                if (distance > 0.365) {
                     mode = corridor_mode::STOP;
                 }
                 if (lidar_node->get_filter_result().front < 0.25) {
@@ -167,7 +176,7 @@ namespace nodes {
                 if (next_mode == corridor_mode::CORRIDOR_FOLLOWING) {
                     if (lidar_node->get_filter_result().front_left> 0.65 ||lidar_node->get_filter_result().front_right> 0.65
                         || std::isnan(lidar_node->get_filter_result().front_left)|| std::isnan(lidar_node->get_filter_result().front_right)) {
-                        motor_node->motor_set_speed(140,140);
+                        motor_node->motor_set_speed(speed,speed);
                         return;
                     }
                 }
@@ -179,10 +188,11 @@ namespace nodes {
             // TURN LEFT using IMU to track rotation
             // Rotate until yaw changes by ±90°, then return to CORRIDOR_FOLLOWING
             case corridor_mode::TURN_L: {
-                if (imu_node->getIntegratedResults() - yaw_ref < 0.92 * M_PI/2) {
-                    motor_node->motor_set_speed(122,132);
+                if (imu_node->getIntegratedResults() - yaw_ref < 0.90 * M_PI/2) {
+                    motor_node->motor_set_speed(127 - turn_speed,127 + turn_speed);
                 } else {
-                    mode = corridor_mode::CORRIDOR_FOLLOWING;
+                    time = this->now().nanoseconds();
+                    mode = corridor_mode::WAIT;
                 }
                 break;
             }
@@ -190,10 +200,11 @@ namespace nodes {
             // TURN RIGHT using IMU to track rotation
             // Rotate until yaw changes by ±90°, then return to CORRIDOR_FOLLOWING
             case corridor_mode::TURN_R: {
-                if (imu_node->getIntegratedResults()-yaw_ref >-0.92* M_PI/2) {
-                    motor_node->motor_set_speed(132,122);
+                if (imu_node->getIntegratedResults()-yaw_ref >-0.90* M_PI/2) {
+                    motor_node->motor_set_speed(127 + turn_speed, 127 - turn_speed);
                 } else {
-                    mode = corridor_mode::CORRIDOR_FOLLOWING;
+                    time = this->now().nanoseconds();
+                    mode = corridor_mode::WAIT;
                 }
                 break;
             }
@@ -202,11 +213,18 @@ namespace nodes {
             // Rotate until yaw changes by ±180°, then return to CORRIDOR_FOLLOWING
             case corridor_mode::TURN_BACK: {
                 if (imu_node->getIntegratedResults()-yaw_ref < 0.97 * M_PI) {
-                    motor_node->motor_set_speed(122,132);
+                    motor_node->motor_set_speed(127 - turn_speed, 127 + turn_speed);
                 } else {
-                    mode = corridor_mode::CORRIDOR_FOLLOWING;
+                    time = this->now().nanoseconds();
+                    mode = corridor_mode::WAIT;
                 }
                 break;
+            }
+            case corridor_mode::WAIT: {
+                motor_node->motor_set_speed(132,132);
+                if (this->now().nanoseconds() - time > 250'000'000) {
+                    mode = corridor_mode::CORRIDOR_FOLLOWING;
+                }
             }
         }
     }

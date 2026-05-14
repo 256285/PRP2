@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="prp_project" targetName="uninstall" />
+      <config projectName="prp_project" targetName="prp_project" />
+      <config projectName="prp_project" targetName="kinematics" />
+      <config projectName="prp_project" targetName="line_pos" />
+      <config projectName="prp_project" targetName="prp_project_uninstall" />
+      <config projectName="prp_project" targetName="example" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="be110ad3-bc56-4296-9e90-5919d57f33a6" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="9r2i1l8S" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2025" />
+    <option name="minorVersion" value="3.3" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="3AA0nZUQ2RNLMqTmg9Co3ebmT13" />
+  <component name="ProjectStatusUIService">{
+  &quot;uiKindId&quot;: &quot;Widget&quot;
+}</component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CMake Application.prp_project.executor": "Run",
+    "Google Test.kinematics.executor": "Run",
+    "Google Test.line_pos.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "RunOnceActivity.west.config.association.type.startup.service": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "ctest.advertisement.all.test.configuration.is.created": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/student/repo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.first.attach.projects": "true",
+    "settings.editor.selected.configurable": "consents",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/include/algorithms" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/algorithms" />
+      <recent name="$PROJECT_DIR$/include/algorithms" />
+      <recent name="$PROJECT_DIR$/include/loops" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.prp_project">
+    <configuration name="example" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="prp_project" TARGET_NAME="example" CONFIG_NAME="Debug">
+      <method v="2" />
+    </configuration>
+    <configuration name="kinematics" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="prp_project" TARGET_NAME="kinematics" CONFIG_NAME="Debug">
+      <method v="2" />
+    </configuration>
+    <configuration name="line_pos" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="prp_project" TARGET_NAME="line_pos" CONFIG_NAME="Debug">
+      <method v="2" />
+    </configuration>
+    <configuration name="prp_project" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="prp_project" TARGET_NAME="prp_project" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="prp_project" RUN_TARGET_NAME="prp_project">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="prp_project_uninstall" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="prp_project" TARGET_NAME="prp_project_uninstall" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="uninstall" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="prp_project" TARGET_NAME="uninstall" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All CTest" type="CTestRunConfiguration" factoryName="CTestRun" PROGRAM_PARAMS="--extra-verbose" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$CMakeCurrentLocalGenerationDir$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$CTestCurrentExecutableName$" EXPLICIT_BUILD_TARGET_NAME="all" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Google Test.example" />
+      <item itemvalue="Google Test.kinematics" />
+      <item itemvalue="Google Test.line_pos" />
+      <item itemvalue="CMake Application.prp_project" />
+      <item itemvalue="CMake Application.prp_project_uninstall" />
+      <item itemvalue="CMake Application.uninstall" />
+      <item itemvalue="CTest Application.All CTest" />
+    </list>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be110ad3-bc56-4296-9e90-5919d57f33a6" name="Changes" comment="" />
+      <created>1772020237630</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1772020237630</updated>
+      <workItem from="1772020238290" duration="6605000" />
+      <workItem from="1772622526876" duration="11000" />
+      <workItem from="1772622763124" duration="99000" />
+      <workItem from="1772622955549" duration="3013000" />
+      <workItem from="1772626393518" duration="6140000" />
+      <workItem from="1773227138021" duration="1415000" />
+      <workItem from="1773228606412" duration="7420000" />
+      <workItem from="1773831928125" duration="7617000" />
+      <workItem from="1773839683182" duration="2683000" />
+      <workItem from="1774436548854" duration="1566000" />
+      <workItem from="1774438977551" duration="8645000" />
+      <workItem from="1775038027280" duration="10308000" />
+      <workItem from="1775642705734" duration="12091000" />
+      <workItem from="1776247364611" duration="13253000" />
+      <workItem from="1776260654502" duration="482000" />
+      <workItem from="1776852178459" duration="14156000" />
+      <workItem from="1777456973065" duration="8904000" />
+      <workItem from="1777465946898" duration="153000" />
+      <workItem from="1777466136797" duration="1418000" />
+      <workItem from="1777467590360" duration="245000" />
+      <workItem from="1777467865713" duration="496000" />
+      <workItem from="1777899968218" duration="8000" />
+      <workItem from="1777900011826" duration="1801000" />
+      <workItem from="1778753120732" duration="21000" />
+      <workItem from="1778753230699" duration="33000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+    <isAutomaticBootstrapAfterUpdate value="false" />
+  </component>
+</project>

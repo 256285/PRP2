@@ -19,8 +19,12 @@ namespace algorithms {
 
     // Function to calculate average of float vector
     inline float vector_average(std::vector<float> vector) {
+
+        if (vector.size() == 0) { return 0; }
         float sum = std::accumulate(vector.begin(), vector.end(), 0.0);
-        return sum / vector.size();
+        float result =  sum / vector.size();
+        if (std::isnan(sum)) {result = 0;}
+        return result;
     }
 
     class LidarFilter {
@@ -42,7 +46,7 @@ namespace algorithms {
             std::vector<float> back{};
 
             // How wide each directional sector should be (in radians)
-            constexpr float angle_range = M_PI/12;
+            constexpr float angle_range = M_PI/24;
 
             // Compute the angular step between each range reading
             auto angle_step = (angle_end - angle_start) / points.size();
@@ -51,7 +55,7 @@ namespace algorithms {
                 const float angle = angle_start + i * angle_step;
 
                 // Skip invalid (infinite) readings
-                if (points[i] < 0.15 || points[i] > 12) continue;
+                if (points[i] < 0.15 || points[i] > 3.2) continue;
 
                 // Sort the value into the correct directional bin based on angle
                 if (angle > 0-angle_range && angle < 0+angle_range) {

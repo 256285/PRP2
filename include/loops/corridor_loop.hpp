@@ -25,6 +25,7 @@ namespace nodes {
             TURN_L,
             TURN_R,
             TURN_BACK,
+            WAIT
         };
         enum corridor_type {
             EIGHT,
@@ -47,7 +48,7 @@ namespace nodes {
         }
         
     private:
-        algorithms::Pid pid = algorithms::Pid (4,3.7,0);
+        algorithms::Pid pid = algorithms::Pid (4.9,3.8,0);
         corridor_type current_type = corridor_type::EIGHT;
         corridor_mode mode = corridor_mode::CALIBRATION;                // current mode of state machine
         corridor_mode next_mode = corridor_mode::CORRIDOR_FOLLOWING;    // next mode after STOP
@@ -55,7 +56,10 @@ namespace nodes {
         //algorithms::Coordinates prev;
         float prev = 0;                                                 // previous distance
         float yaw_ref = 0;                                              // saved yaw
-
+        float speed = 149;
+        float turn_speed = 8;
+        float prev_distance = 0;
+        uint64_t time;
         // Full state machine for Maze
         void state_machine();
 
